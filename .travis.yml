@@ -1,0 +1,34 @@
+#
+# Author : Francesco Seccamonte
+# Copyright (c) 2020 Francesco Seccamonte. All rights reserved.  
+# Licensed under the MIT License. See LICENSE file in the project root for full license information.  
+# 
+
+os: linux
+language: minimal
+
+services:
+  - docker
+
+addons:
+  apt:
+    packages:
+      # Update docker version
+      - docker-ce
+
+env:
+  # used to setup a build matrix
+  - PYTHONVERSION=latest
+  - PYTHONVERSION=3.6
+
+before_install:
+  # Pull image
+  - docker pull python:$PYTHONVERSION
+  # Start container
+  - docker run -itd --name python$PYTHONVERSION -v $TRAVIS_BUILD_DIR:/home/repo python:$PYTHONVERSION
+  # Print python version
+  - docker exec python$PYTHONVERSION python3 --version
+
+script:
+  - docker exec -w /home/repo python$PYTHONVERSION python3 setup.py develop
+  - docker exec -w /home/repo python$PYTHONVERSION python3 -m unittest discover -v
