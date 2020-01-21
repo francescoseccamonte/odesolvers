@@ -1,5 +1,5 @@
 [run]
 omit =
 	*tests*
-	*utils*
+	*plotting*
 	*__init__.py

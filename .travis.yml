@@ -22,13 +22,23 @@ env:
   - PYTHONVERSION=3.6
 
 before_install:
+  # setup environmental variables needed by Codecov in Docker
+  - CI_ENV_CODECOV=`bash <(curl -s https://codecov.io/env)`
   # Pull image
   - docker pull python:$PYTHONVERSION
   # Start container
-  - docker run -itd --name python$PYTHONVERSION -v $TRAVIS_BUILD_DIR:/home/repo python:$PYTHONVERSION
+  - docker run -itd --name python$PYTHONVERSION $CI_ENV_CODECOV -v $TRAVIS_BUILD_DIR:/home/repo python:$PYTHONVERSION
   # Print python version
   - docker exec python$PYTHONVERSION python3 --version
 
 script:
   - docker exec -w /home/repo python$PYTHONVERSION python3 setup.py develop
   - docker exec -w /home/repo python$PYTHONVERSION python3 -m unittest discover -v
+
+after_success:
+  # Install coverage related tools
+  - docker exec python$PYTHONVERSION pip3 install coverage codecov
+  # Compute Code Coverage
+  - docker exec -w /home/repo python$PYTHONVERSION coverage run -m --source=odesolvers unittest discover
+  # Upload Coverage report to Codecov
+  - docker exec -w /home/repo python$PYTHONVERSION codecov
