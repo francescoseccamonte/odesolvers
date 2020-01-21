@@ -1,7 +1,7 @@
 ODE Solvers in Python
 ========================
 
-|Travis status| |MIT license|
+|Travis status| |Codecov status| |MIT license|
 
 This repository contains simple Python implementations of some numerical solvers for ODEs.
 
@@ -37,6 +37,9 @@ You can clone the repository and do the following:
 
 .. |Travis status| image:: https://travis-ci.com/francescoseccamonte/odesolvers.svg?token=GxhVokoahdVSsAQLsW94&branch=master
     :target: https://travis-ci.com/francescoseccamonte/odesolvers
+
+.. |Codecov status| image:: https://codecov.io/gh/francescoseccamonte/odesolvers/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/francescoseccamonte/odesolvers
 
 .. |MIT license| image:: https://img.shields.io/badge/License-MIT-blue.svg
    :target: LICENSE
