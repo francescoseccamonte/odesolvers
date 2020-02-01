@@ -3,3 +3,5 @@ omit =
 	*tests*
 	*plotting*
 	*__init__.py
+
+source = odesolvers

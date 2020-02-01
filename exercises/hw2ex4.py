@@ -36,23 +36,15 @@ if __name__ == '__main__':
 	iv = np.array([1.0,2.0]);
 	t0 : np.float = 0.0;
 	tn : np.float = 1.0;
-	h1 : np.float = 0.01;
-	h2 : np.float = 0.05;
 
-	# solving the ODE with h = 0.01
-	y1 = odesolvers.ExplicitEulerSolver(hw2ex4ode, iv, t0, tn, h1);
+	h = np.array([0.01, 0.05]);
+	
+	for hi in np.nditer(h):
+		# solving the ODE
+		y = odesolvers.ExplicitEulerSolver(hw2ex4ode, iv, t0, tn, hi);
 
-	# plotting the results
-	odesolvers.plotODEsol(y1[:,0], t0, h1, 'y1(t)');
-	tikzplotlib.save(f'y1-{h1}.tex');
-	odesolvers.plotODEsol(y1[:,1], t0, h1, 'y2(t)');
-	tikzplotlib.save(f'y2-{h1}.tex');
-
-	# solving the ODE with h = 0.05
-	y2 = odesolvers.ExplicitEulerSolver(hw2ex4ode, iv, t0, tn, h2);
-
-	# plotting the results
-	odesolvers.plotODEsol(y2[:,0], t0, h2, 'y1(t)');
-	tikzplotlib.save(f'y1-{h2}.tex');
-	odesolvers.plotODEsol(y2[:,1], t0, h2, 'y2(t)');
-	tikzplotlib.save(f'y2-{h2}.tex');
+		# plotting the results
+		odesolvers.plotODEsol(y[:,0], t0, hi, 'y1(t)');
+		tikzplotlib.save(f'y1-{hi}.tex');
+		odesolvers.plotODEsol(y[:,1], t0, hi, 'y2(t)');
+		tikzplotlib.save(f'y2-{hi}.tex');

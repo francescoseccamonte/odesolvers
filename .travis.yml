@@ -39,6 +39,6 @@ after_success:
   # Install coverage related tools
   - docker exec python$PYTHONVERSION pip3 install coverage codecov
   # Compute Code Coverage
-  - docker exec -w /home/repo python$PYTHONVERSION coverage run -m --source=odesolvers unittest discover
+  - docker exec -w /home/repo python$PYTHONVERSION coverage run -m unittest discover
   # Upload Coverage report to Codecov
   - docker exec -w /home/repo python$PYTHONVERSION codecov
