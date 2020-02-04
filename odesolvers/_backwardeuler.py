@@ -10,8 +10,8 @@
 
 import numpy as np
 
-def _BackwardEuler_step(f, df, xi, ti, h, TOL, MAXITER):
-	"""Internal function implementing one step of the Backward Euler method.
+def _BackwardEuler_step(f, df, xi, ti, h, theta, TOL, MAXITER):
+	"""Internal function implementing one step of the theta (including Backward Euler) method.
 
 	The ODE to be solved is of the form: x' = f(t,x), x being a vector in n-dimensions
 
@@ -21,6 +21,7 @@ def _BackwardEuler_step(f, df, xi, ti, h, TOL, MAXITER):
 		:param xi: initial condition at time ti
 		:param ti: current time
 		:param h: step size
+		:param theta: value between 0 and 1
 		:param TOL: Numerical tolerance for convergence
 		:param MAXITER: Maximum number of Newton iterations to be performed
 		:type f: Callable
@@ -28,9 +29,10 @@ def _BackwardEuler_step(f, df, xi, ti, h, TOL, MAXITER):
 		:type xi: np.array[float]
 		:type ti: np.float
 		:type h: np.float
+		:type theta: np.float
 		:type TOL: np.float
 		:type NEWTITER: (unsigned) int
-		:return: Vector x containing solution of component j at current time ti (x[j])
+		:return: Vector x containing solution of component j at next time ti+h (x[j])
 		:rtype: np.array[float]
 
 	"""
@@ -39,14 +41,14 @@ def _BackwardEuler_step(f, df, xi, ti, h, TOL, MAXITER):
 	# xinu's first guess initialized as previous solution
 	xinu = np.copy(xi);
 
-	# Newton iteration # TODO CHECK
+	# Newton iteration
 	for i in range(MAXITER):
-		A = (np.identity(xi.size) - h*df(ti,xinu));
-		b = -(xinu - xi - h*f(ti,xinu));
+		A = (np.identity(xi.size) - (1-theta)*h*df(ti+h,xinu));
+		b = -(xinu - xi -theta*h*f(ti,xi) -(1-theta)*h*f(ti+h,xinu));
 
 		# delta = xinu+1 - xinu
 		# Solving the linear system of equations A delta = b, that is,
-		# (I - h*df)*delta = -(xinu - xi - h*f(ti,xinu))
+		# (I - h*df)*delta = -(xinu - xi -theta*h*f(ti,xi) -(1-theta)*h*f(ti+h,xinu))
 		delta = np.linalg.solve(A, b);
 
 		xinu += delta;

@@ -109,9 +109,9 @@ if __name__ == '__main__':
 
 			# plotting the results
 			odesolvers.plotODEsol(y[:,0], t0, hi, 'y1(t)');
-			# tikzplotlib.save(f'problem1-y1-step-{hi}-theta-{thetai}.tex');
+			tikzplotlib.save(f'problem1-y1-step-{hi}-theta-{thetai}.tex');
 			odesolvers.plotODEsol(y[:,1], t0, hi, 'y2(t)');
-			# tikzplotlib.save(f'problem1-y2-step-{hi}-theta-{thetai}.tex');
+			tikzplotlib.save(f'problem1-y2-step-{hi}-theta-{thetai}.tex');
 
 	# Problem 2
 	iv = np.array([10,10]);
@@ -125,7 +125,9 @@ if __name__ == '__main__':
 
 			# plotting the results
 			odesolvers.plotODEsol(y[:,0], t0, hi, 'y1(t)');
-			# tikzplotlib.save(f'problem2-y1-step-{hi}-theta-{thetai}.tex');
+			tikzplotlib.save(f'problem2-y1-step-{hi}-theta-{thetai}.tex');
 			odesolvers.plotODEsol(y[:,1], t0, hi, 'y2(t)');
-			# tikzplotlib.save(f'problem2-y2-step-{hi}-theta-{thetai}.tex');
+			tikzplotlib.save(f'problem2-y2-step-{hi}-theta-{thetai}.tex');
+			odesolvers.ODEphaseplot(y[:,0], y[:,1], t0, hi, 'y1(t)', 'y2(t)');
+			tikzplotlib.save(f'problem2-y1y2-step-{hi}-theta-{thetai}.tex');
 

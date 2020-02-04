@@ -73,11 +73,8 @@ def ThetaMethod(f, iv : Array[float], t0 : float, tn : float, h : float, theta :
 	if (theta == 1):
 		for i in range(N):
 			x[i+1,:] = _ExplicitEuler_step(f,x[i,:],(t0+h*i),h);
-	elif (theta == 0):
-		for i in range(N):
-			x[i+1,:] = _BackwardEuler_step(f,df,x[i,:],(t0+h*i),h,TOL,NEWTITER);
 	else:
 		for i in range(N):
-			x[i+1,:] = theta*_ExplicitEuler_step(f,x[i,:],(t0+h*i),h) + (1 - theta)*_BackwardEuler_step(f,df,x[i,:],(t0+h*i),h,TOL,NEWTITER);
+			x[i+1,:] = _BackwardEuler_step(f,df,x[i,:],(t0+h*i),h,theta,TOL,NEWTITER);
 
 	return x;
