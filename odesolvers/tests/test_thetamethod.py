@@ -28,8 +28,8 @@ class TestBackwardEuler(unittest.TestCase):
 
 		y = odesolvers.ThetaMethod(multivariableode, self.iv, self.t0, self.tn, h, self.theta, multivariableodeJ);
 
-		self.assertEqual(y[0,0],iv[0]);
-		self.assertEqual(y[0,1],iv[1]);
+		self.assertEqual(y[0,0],self.iv[0]);
+		self.assertEqual(y[0,1],self.iv[1]);
 		self.assertLess(y[1,1], y[0,1]);
 
 	def testStiffODEConvergent(self):
@@ -38,8 +38,8 @@ class TestBackwardEuler(unittest.TestCase):
 		N : np.uint = np.uint(np.ceil((self.tn - self.t0)/h));	# final step
 		y = odesolvers.ThetaMethod(stiffode, self.iv, self.t0, self.tn, h, self.theta, stiffodeJ);
 
-		self.assertEqual(y[0,0],iv[0]);
-		self.assertEqual(y[0,1],iv[1]);
+		self.assertEqual(y[0,0],self.iv[0]);
+		self.assertEqual(y[0,1],self.iv[1]);
 		self.assertLess(np.absolute(y[N,1]-y[0,1]),3);
 
 	def testStiffODENotConvergent(self):
@@ -48,6 +48,6 @@ class TestBackwardEuler(unittest.TestCase):
 		N : np.uint = np.uint(np.ceil((self.tn - self.t0)/h));	# final step
 		y = odesolvers.ThetaMethod(stiffode, self.iv, self.t0, self.tn, h, 0.8, stiffodeJ);
 
-		self.assertEqual(y[0,0],iv[0]);
-		self.assertEqual(y[0,1],iv[1]);
+		self.assertEqual(y[0,0],self.iv[0]);
+		self.assertEqual(y[0,1],self.iv[1]);
 		self.assertGreater(np.absolute(y[N,1]-y[0,1]),3);
