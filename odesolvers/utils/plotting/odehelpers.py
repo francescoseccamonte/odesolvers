@@ -40,6 +40,33 @@ def plotODEsol(x : Array[float], t0 : float, h : float, ylabel : str = 'x(t)') -
 	plt.title(f'Step size: {h}')
 	plt.show()
 
+def plotODEsolVar(x : Array[float], t0 : float, h : Array[float], ylabel : str = 'x(t)') -> None:
+	"""Function plotting a solution of an ODE
+		with variable stepsize.
+
+	- **parameters**, **types**, **return** and **return types**::
+		:param x: array containing ODE solution at time i x[i]
+		:param t0: initial time
+		:param h: step size
+		:param ylabel: ylabel (default to x(t))
+		:type x: np.array[float]
+		:type t0: np.float
+		:type h: np.float
+		:type ylabel: string
+		:return: None
+		:rtype: None
+
+	"""
+	t = t0 + np.cumsum(h);
+
+	plt.clf()	# clear figure potentially already open
+
+	plt.plot(t,x)
+	plt.xlabel('t [s]')
+	plt.ylabel(ylabel)
+	plt.title(f'Solution with variable stepsize.')
+	plt.show()
+
 
 def ODEphaseplot(x1 : Array[float], x2 : Array[float], t0 : float, h : float, xlabel : str = 'x_1', ylabel : str = 'x_2') -> None:
 	"""Function plotting a phase portrait (without arrows) of an ODE solution.

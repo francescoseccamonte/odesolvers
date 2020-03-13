@@ -12,7 +12,7 @@ import numpy as np
 from nptyping import Array
 
 from ._expliciteuler import _ExplicitEuler_step
-from ._backwardeuler import _BackwardEuler_step
+from ._thetamethod import _Theta_step
 
 def ThetaMethod(f, iv : Array[float], t0 : float, tn : float, h : float, theta : float, df = None, TOL : float = 1.0e-5, NEWTITER : int = 10) -> Array[float]:
 	"""Function implementing the Theta method for ODEs numerical solution.
@@ -65,9 +65,9 @@ def ThetaMethod(f, iv : Array[float], t0 : float, tn : float, h : float, theta :
 	if (theta != 1) and df is None:
 		raise NotImplementedError('Automatic differentiation not implemented yet. Please provide the Jacobian of f')
 
-	N : np.uint = np.uint(np.ceil((tn - t0)/h));	# number of steps
+	N : np.int = np.int(np.ceil((tn - t0)/h));	# number of steps
 
-	x = np.empty((np.uint(N+1),iv.size), float);	# preallocating the array (+1 for including initial condition)
+	x = np.empty((np.int(N+1),iv.size), float);	# preallocating the array (+1 for including initial condition)
 	x[0,:] = iv;
 
 	if (theta == 1):
@@ -75,6 +75,6 @@ def ThetaMethod(f, iv : Array[float], t0 : float, tn : float, h : float, theta :
 			x[i+1,:] = _ExplicitEuler_step(f,x[i,:],(t0+h*i),h);
 	else:
 		for i in range(N):
-			x[i+1,:] = _BackwardEuler_step(f,df,x[i,:],(t0+h*i),h,theta,TOL,NEWTITER);
+			x[i+1,:] = _Theta_step(f,df,x[i,:],(t0+h*i),h,theta,TOL,NEWTITER);
 
 	return x;

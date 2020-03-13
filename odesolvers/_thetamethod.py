@@ -5,12 +5,12 @@
 #
 
 #
-# Internal implementation of the Backward Euler method for ODEs numerical solution.
+# Internal implementation of the Theta method (including Backward Euler) for ODEs numerical solution.
 #
 
 import numpy as np
 
-def _BackwardEuler_step(f, df, xi, ti, h, theta, TOL, MAXITER):
+def _Theta_step(f, df, xi, ti, h, theta, TOL, MAXITER):
 	"""Internal function implementing one step of the theta (including Backward Euler) method.
 
 	The ODE to be solved is of the form: x' = f(t,x), x being a vector in n-dimensions
@@ -48,7 +48,7 @@ def _BackwardEuler_step(f, df, xi, ti, h, theta, TOL, MAXITER):
 
 		# delta = xinu+1 - xinu
 		# Solving the linear system of equations A delta = b, that is,
-		# (I - h*df)*delta = -(xinu - xi -theta*h*f(ti,xi) -(1-theta)*h*f(ti+h,xinu))
+		# (I - (1-theta)*h*df)*delta = -(xinu - xi -theta*h*f(ti,xi) -(1-theta)*h*f(ti+h,xinu))
 		delta = np.linalg.solve(A, b);
 
 		xinu += delta;

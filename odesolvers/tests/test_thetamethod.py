@@ -15,7 +15,7 @@ import odesolvers
 
 from .test_helpers import *
 
-class TestBackwardEuler(unittest.TestCase):
+class TestThetaMethod(unittest.TestCase):
 	def setUp(self):
 		# common initial and final time for all tests
 		self.t0 : np.float = 0.0;
